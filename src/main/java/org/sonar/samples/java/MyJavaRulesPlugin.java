@@ -26,15 +26,15 @@ import org.sonar.api.Plugin;
  */
 public class MyJavaRulesPlugin implements Plugin {
 
-  @Override
-  public void define(Context context) {
+    @Override
+    public void define(Context context) {
 
-    // server extensions -> objects are instantiated during server startup
-    context.addExtension(MyJavaRulesDefinition.class);
+        // server extensions -> objects are instantiated during server startup
+        context.addExtension(MyJavaRulesDefinition.class);
 
-    // batch extensions -> objects are instantiated during code analysis
-    context.addExtension(MyJavaFileCheckRegistrar.class);
+        // batch extensions -> objects are instantiated during code analysis
+        context.addExtension(MyJavaFileCheckRegistrar.class);
 
-  }
+    }
 
 }

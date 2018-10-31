@@ -32,38 +32,39 @@ import org.sonar.plugins.java.api.tree.VariableTree;
 @Rule(key = "SpringControllerRequestMappingEntity")
 public class SpringControllerRequestMappingEntityRule extends BaseTreeVisitor implements JavaFileScanner {
 
-  private JavaFileScannerContext context;
+    private JavaFileScannerContext context;
 
-  @Override
-  public void scanFile(JavaFileScannerContext context) {
-    this.context = context;
+    @Override
+    public void scanFile(JavaFileScannerContext context) {
+        this.context = context;
 
-    scan(context.getTree());
-  }
-
-  /**
-   * Overriding the visitor method to implement the logic of the rule.
-   * @param tree AST of the visited method.
-   */
-  @Override
-  public void visitMethod(MethodTree tree) {
-    Symbol.MethodSymbol methodSymbol = tree.symbol();
-
-    SymbolMetadata parentClassOwner = methodSymbol.owner().metadata();
-    boolean isControllerContext = parentClassOwner.isAnnotatedWith("org.springframework.stereotype.Controller");
-
-    if (isControllerContext
-      && methodSymbol.metadata().isAnnotatedWith("org.springframework.web.bind.annotation.RequestMapping")) {
-
-      for (VariableTree param : tree.parameters()) {
-        TypeTree typeOfParam = param.type();
-        if (typeOfParam.symbolType().symbol().metadata().isAnnotatedWith("javax.persistence.Entity")) {
-          context.reportIssue(this, typeOfParam, String.format("Don't use %s here because it's an @Entity", typeOfParam.symbolType().name()));
-        }
-      }
-
+        scan(context.getTree());
     }
-    super.visitMethod(tree);
-  }
+
+    /**
+     * Overriding the visitor method to implement the logic of the rule.
+     *
+     * @param tree AST of the visited method.
+     */
+    @Override
+    public void visitMethod(MethodTree tree) {
+        Symbol.MethodSymbol methodSymbol = tree.symbol();
+
+        SymbolMetadata parentClassOwner = methodSymbol.owner().metadata();
+        boolean isControllerContext = parentClassOwner.isAnnotatedWith("org.springframework.stereotype.Controller");
+
+        if (isControllerContext
+                && methodSymbol.metadata().isAnnotatedWith("org.springframework.web.bind.annotation.RequestMapping")) {
+
+            for (VariableTree param : tree.parameters()) {
+                TypeTree typeOfParam = param.type();
+                if (typeOfParam.symbolType().symbol().metadata().isAnnotatedWith("javax.persistence.Entity")) {
+                    context.reportIssue(this, typeOfParam, String.format("Don't use %s here because it's an @Entity", typeOfParam.symbolType().name()));
+                }
+            }
+
+        }
+        super.visitMethod(tree);
+    }
 
 }

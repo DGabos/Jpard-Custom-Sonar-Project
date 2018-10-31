@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.sonarsource.samples</groupId>
+	<groupId>org.jpard.custom.rule.plugin</groupId>
 	<artifactId>java-custom-rules</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>sonar-plugin</packaging>
@@ -134,7 +134,7 @@
 					<pluginName>Java Custom Rules</pluginName>
 					<pluginClass>org.sonar.samples.java.MyJavaRulesPlugin</pluginClass>
 					<sonarLintSupported>true</sonarLintSupported>
-					<sonarQubeMinVersion>6.7</sonarQubeMinVersion>
+					<sonarQubeMinVersion>7.3</sonarQubeMinVersion>
 				</configuration>
 			</plugin>
 

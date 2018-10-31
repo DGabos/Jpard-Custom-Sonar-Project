@@ -10,8 +10,8 @@ import org.slf4j.Logger;
  */
 public class AvoidSuperClassCheck extends Logger { // Noncompliant {{The usage of super class org.slf4j.Logger is forbidden}}
 
-  protected AvoidSuperClassCheck(String name) {
-    super(name);
-  }
+    protected AvoidSuperClassCheck(String name) {
+        super(name);
+    }
 
 }
